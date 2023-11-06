@@ -1,0 +1,165 @@
+---
+brands:
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+  - img: assets/images/brand/brand-1-1.png
+    name: Lo'real
+
+menu:
+  - title: Home
+    url: /
+    file: /
+  - title: Services
+    url: /service
+    file: /service.html
+  - title: Gallery
+    url: /gallery
+    file: /gallery.html
+  - title: Our Team
+    url: /team
+    file: /team.html
+  - title: Contact
+    url: /contact
+    file: /contact.html
+
+feature:
+  - feature: Aroma Therapy
+  - feature: Sauna Relax
+  - feature: Geothermal Spa
+  - feature: Aroma Therapy
+  - feature: Sauna Relax
+  - feature: Geothermal Spa
+  - feature: Aroma Therapy
+  - feature: Sauna Relax
+  - feature: Geothermal Spa
+  - feature: Aroma Therapy
+  
+gallery:
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+  - thumb: assets/images/gallery/new2.jpg
+    full: assets/images/gallery/new2.jpg
+
+review:
+  - name: Edna Marxten
+    body: I was very impresed by the avivon service, lorem ipsum is simply free text used by copytyping.
+    img: testimonial-1-1.jpg
+  - name: Edna Marxten
+    body: I was very impresed by the avivon service, lorem ipsum is simply free text used by copytyping.
+    img: testimonial-1-1.jpg
+  - name: Edna Marxten
+    body: I was very impresed by the avivon service, lorem ipsum is simply free text used by copytyping.
+    img: testimonial-1-1.jpg
+  - name: Edna Marxten
+    body: I was very impresed by the avivon service, lorem ipsum is simply free text used by copytyping.
+    img: testimonial-1-1.jpg
+
+service:
+  - name: Massages
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-2.jpg
+    icon: icon-massage
+    url: book
+  - name: Facial Cares
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-1.jpg
+    icon: icon-facial-mask
+    url: book
+  - name: Hydro Therapy
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-3.jpg
+    icon: icon-lotus
+    url: book
+  - name: Massages
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-2.jpg
+    icon: icon-massage
+    url: book
+  - name: Facial Cares
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-1.jpg
+    icon: icon-facial-mask
+    url: book
+  - name: Hydro Therapies
+    description: I was impresed by the moling services, not lorem ipsum is simply free text.
+    img: assets/images/services/services-1-3.jpg
+    icon: icon-lotus
+    url: book
+
+slider:
+  - bg: main-slider-1-1.jpg
+    tagline: idealx place to unwind
+    heading: Beauty Salon
+    cta-url: contact
+    cta-title: Book Now
+  - bg: main-slider-1-2.jpg
+    tagline: ideal place to unwind
+    heading: Spa Center
+    cta-url: contact
+    cta-title: Book Now
+  - bg: main-slider-1-3.jpg
+    tagline: ideal place to unwind
+    heading: Nail salon
+    cta-url: contact
+    cta-title: Book Now
+
+team:
+  - name: Aleesha Brown
+    position: Therapist
+    image: team-1-1.jpg
+    instagram: instagram
+  - name: David Cooper
+    position: Therapist
+    image: team-1-2.jpg
+    instagram: instagram
+  - name: Jessica Rose
+    position: Therapist
+    image: team-1-3.jpg
+    instagram: instagram
+  - name: Kevin Martin
+    position: /team
+    image: team-1-4.jpg
+    instagram: instagram
+  - name: Christine Eve
+    position: Therapist
+    image: team-1-5.jpg
+    instagram: instagram
+  - name: Michale Orag
+    position: Therapist
+    image: team-1-5.jpg
+    instagram: instagram
+---
