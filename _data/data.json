@@ -1,0 +1,12 @@
+{
+  "contacts": [
+    { "name": "user-name-1", "phone": "user-phon-1" },
+    { "name": "user-name-2", "phone": "user-phon-2" },
+    { "name": "user-name-3", "phone": "user-phon-3" }
+  ],
+  "pages": [
+    { "page": 1, "title": "title-1", "link": "/page-1" },
+    { "page": 2, "title": "title-2", "link": "/page-2" },
+    { "page": 3, "title": "title-3", "link": "/page-3" }
+  ]
+}
