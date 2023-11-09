@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table id="myTable">
+        <thead>
+            <tr id="headerRow">
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <button onclick="addRecord()">Add Record</button>
+    <button onclick="saveChanges()">Save</button>
+
+    <div id="output"></div>
+
+    <script>
+        fetch('https://raw.githubusercontent.com/rzwns/w/main/data.json')
+            .then(response => response.json())
+            .then(jsonData => {
+                var tableBody = document.getElementById("tableBody");
+                var headerRow = document.getElementById("headerRow");
+
+                // Clear existing table rows and header
+                tableBody.innerHTML = "";
+                headerRow.innerHTML = "";
+
+                // Generate table headers dynamically
+                var headers = Object.keys(jsonData.employee);
+                headers.forEach(function(header) {
+                    var th = document.createElement("th");
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+
+                // Generate table rows dynamically
+                var row = document.createElement("tr");
+                headers.forEach(function(header) {
+                    var cell = document.createElement("td");
+                    cell.textContent = jsonData.employee[header];
+                    row.appendChild(cell);
+                });
+                tableBody.appendChild(row);
+            })
+            .catch(error => console.log(error));
+
+        function addRecord() {
+            var tableBody = document.getElementById("tableBody");
+            var headers = Array.from(document.querySelectorAll("#headerRow th")).map(th => th.textContent);
+            var newRow = document.createElement("tr");
+
+            headers.forEach(function(header) {
+                var cell = document.createElement("td");
+                cell.contentEditable = true; // Make the cell editable
+                newRow.appendChild(cell);
+            });
+
+            var moveUpButton = document.createElement("button");
+            moveUpButton.textContent = "Move Up";
+            moveUpButton.onclick = function() {
+                moveRowUp(newRow);
+            };
+            newRow.appendChild(moveUpButton);
+
+            var moveDownButton = document.createElement("button");
+            moveDownButton.textContent = "Move Down";
+            moveDownButton.onclick = function() {
+                moveRowDown(newRow);
+            };
+            newRow.appendChild(moveDownButton);
+
+            tableBody.appendChild(newRow);
+        }
+
+        function moveRowUp(row) {
+            if (row.previousElementSibling) {
+                row.parentNode.insertBefore(row, row.previousElementSibling);
+            }
+        }
+
+        function moveRowDown(row) {
+            if (row.nextElementSibling) {
+                row.parentNode.insertBefore(row.nextElementSibling, row);
+            }
+        }
+
+        function saveChanges() {
+            var tableRows = document.querySelectorAll("#myTable tbody tr");
+            var modifiedData = [];
+
+            tableRows.forEach(function(row) {
+                var rowData = {};
+
+                Array.from(row.cells).forEach(function(cell, index) {
+                    var header = document.querySelector("#headerRow").cells[index].textContent;
+                    rowData[header] = cell.textContent;
+                });
+
+                modifiedData.push(rowData);
+            });
+
+            var outputDiv = document.getElementById("output");
+            outputDiv.textContent = JSON.stringify(modifiedData, null, 2);
+        }
+    </script>
+</body>
+</html>
