@@ -1,0 +1,24 @@
+[
+    {
+        "name": "name-value-1",
+        "email": "email-value-1",
+        "address": [
+            {
+                "city": "new delhi",
+                "zip code": 110006,
+                "country": "india"
+            }
+        ]
+    },
+    {
+        "name": "name-value-2",
+        "email": "email-value-2",
+        "address": [
+            {
+                "city": "noida",
+                "zip code": 110008,
+                "country": "india"
+            }
+        ]
+    }
+]
