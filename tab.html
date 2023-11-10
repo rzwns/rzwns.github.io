@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub File Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            margin-top: 20px;
+        }
+        td {
+            outline: none !important;
+        }
+        .table-container button {
+            margin-top: 10px;
+        }
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 0 auto;
+            animation: rotate 2s linear infinite;
+        }
+        .btn-sm {
+            --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">GitHub File Editor</h1>
+        
+        <div id="tableContainer" class="table-container table-responsive"></div>
+        <button id="addRecordButton" class="btn btn-primary">Add Record</button>
+        <button id="updateButton" class="btn btn-success">Update File</button>
+        <div id="loadingSpinner" class="spinner text-primary">
+            <img src="spin.svg" alt="Loading...">
+        </div>
+    </div>
+    
+    <script>
+        const accessToken = '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';
+        const owner = 'rzwns';
+        const repo = 'w';
+        const path = 'data.json';
+        const branch = 'main';
+        const tableContainer = document.getElementById('tableContainer');
+        const addRecordButton = document.getElementById('addRecordButton');
+        const updateButton = document.getElementById('updateButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const generatedJson = document.getElementById('generatedJson');
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        let jsonData;
+
+        window.onload = fetchFile;
+
+        function generateJsonAndUpdateFile() {
+            jsonData = parseTableToJSON();
+            const newContent = JSON.stringify(jsonData, null, 2);
+            updateFile(newContent);
+        }
+
+        addRecordButton.addEventListener('click', addRecord);
+        updateButton.addEventListener('click', generateJsonAndUpdateFile);
+        tableContainer.addEventListener('input', generateJson);
+
+        async function fetchFile() {
+            try {
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        Authorization: `token ${accessToken}`
+                    }
+                });
+
+                if (response.status === 200) {
+                    const { content } = await response.json();
+                    const decodedContent = atob(content);
+                    jsonData = JSON.parse(decodedContent);
+                    createTableFromJSON(jsonData);
+                } else {
+                    tableContainer.innerHTML = '<p class="text-danger">Failed to fetch file.</p>';
+                }
+            } catch (error) {
+                tableContainer.innerHTML = '<p class="text-danger">Failed to fetch file.</p>';
+            }
+        }
+
+
+        
+        function createTableFromJSON(data) {
+            const keys = Object.keys(data[0]);
+            const table = document.createElement('table');
+            table.classList.add('table', 'table-bordered', 'border-primary', 'table-striped', 'table-hover');
+            const thead = table.createTHead();
+            const row = thead.insertRow();
+
+            keys.forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                row.appendChild(th);
+            });
+
+            data.forEach((item, index) => {
+                const row = table.insertRow();
+                keys.forEach(key => {
+                    const cell = row.insertCell();
+                    cell.textContent = item[key];
+                    cell.contentEditable = true; // Make the cell content editable
+                });
+                const shiftCell = row.insertCell();
+                const deleteCell = row.insertCell();
+                if (index > 0) {
+                    const shiftUpButton = document.createElement('img');
+                    shiftUpButton.textContent = 'UP';
+                    shiftUpButton.classList.add('btn', 'btn-sm', 'btn-secondary');
+                    shiftUpButton.addEventListener('click', () => shiftRow(index, 'up'));
+                    shiftCell.appendChild(shiftUpButton);
+                }
+                if (index < data.length - 1) {
+                    const shiftDownButton = document.createElement('img');
+                    shiftDownButton.textContent = 'DOWN';
+                    shiftDownButton.classList.add('btn', 'btn-sm', 'btn-secondary');
+                    shiftDownButton.addEventListener('click', () => shiftRow(index, 'down'));
+                    shiftCell.appendChild(shiftDownButton);
+                }
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+                deleteButton.addEventListener('click', () => deleteRow(index));
+                deleteCell.appendChild(deleteButton);
+            });
+
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
+        }
+        
+        async function updateFile(newContent) {
+            loadingSpinner.style.display = 'block';
+            updateButton.disabled = true;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `token ${accessToken}`
+                    }
+                });
+
+                if (response.status === 200) {
+                    const { sha } = await response.json();
+                    const updateData = {
+                        message: 'Update file via API',
+                        content: btoa(newContent),
+                        branch: branch
+                    };
+
+                    await fetch(apiUrl, {
+                        method: 'PUT',
+                        headers: {
+                            Authorization: `token ${accessToken}`
+                        },
+                        body: JSON.stringify(updateData)
+                    });
+                } else {
+                    tableContainer.innerHTML = '<p class="text-danger">Failed to update file.</p>';
+                }
+            } catch (error) {
+                tableContainer.innerHTML = '<p class="text-danger">Failed to update file.</p>';
+            }
+
+            setTimeout(() => {
+                // Display success message after 3 seconds
+                tableContainer.innerHTML = '<p class="text-success">File updated successfully.</p>';
+                loadingSpinner.style.display = 'none';
+                updateButton.disabled = false;
+            }, 1000); // 3000 milliseconds = 3 seconds
+        }
+
+        
+        function addRecord() {
+            if (jsonData) {
+                const keys = Object.keys(jsonData[0]);
+                const newRowData = {};
+                keys.forEach(key => {
+                    newRowData[key] = '';
+                });
+                jsonData.push(newRowData);
+                createTableFromJSON(jsonData);
+            }
+        }
+
+        function parseTableToJSON() {
+            const table = tableContainer.querySelector('table');
+            const headers = [...table.querySelectorAll('th')].map(header => header.textContent);
+            const data = [];
+
+            table.querySelectorAll('tr').forEach((row, rowIndex) => {
+                if (rowIndex !== 0) {
+                    const rowData = {};
+                    row.querySelectorAll('td').forEach((cell, cellIndex) => {
+                        rowData[headers[cellIndex]] = cell.textContent;
+                    });
+                    data.push(rowData);
+                }
+            });
+
+            return data;
+        }
+
+        function shiftRow(index, direction) {
+            if (jsonData) {
+                if (direction === 'up' && index > 0) {
+                    const temp = jsonData[index];
+                    jsonData[index] = jsonData[index - 1];
+                    jsonData[index - 1] = temp;
+                } else if (direction === 'down' && index < jsonData.length - 1) {
+                    const temp = jsonData[index];
+                    jsonData[index] = jsonData[index + 1];
+                    jsonData[index + 1] = temp;
+                }
+                createTableFromJSON(jsonData);
+            }
+        }
+
+        function deleteRow(index) {
+            if (jsonData && jsonData.length > 1) {
+                jsonData.splice(index, 1);
+                createTableFromJSON(jsonData);
+            }
+        }
+    </script>
+</body>
+</html>
