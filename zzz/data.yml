@@ -1,1 +1,16 @@
-
+- cetegory: cetegory-1
+  description: cetegory-description-1
+  - name: service-name-1
+    pricing: service-pricing-1
+  - name: service-name-2
+    pricing: service-pricing-2
+  - name: service-name-3
+    pricing: service-pricing-3
+- cetegory: cetegory-2
+  description: cetegory-description-2
+  - name: service-name-1
+    pricing: service-pricing-1
+  - name: service-name-2
+    pricing: service-pricing-2
+  - name: service-name-2
+    pricing: service-pricing-2
