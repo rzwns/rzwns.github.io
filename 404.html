@@ -1,39 +1,75 @@
-<script>
-var url = window.location.href;
-var parts = url.split('/');
-var lastPart = parts[parts.length - 1];
-console.log(lastPart);
-// Create a new instance of the TextEncoder interface
-var encoder = new TextEncoder();
+<!DOCTYPE html>
+<html lang="en">
 
-// Convert the lastPart to an array buffer
-var data = encoder.encode(lastPart);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashed Value</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
 
-// Hash the array buffer using the SubtleCrypto API
-crypto.subtle.digest('SHA-256', data).then(function(hash) {
-  // Convert the hash to a hexadecimal string
-  var hashArray = Array.from(new Uint8Array(hash));
-  var hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-  
-  // Create a JSON response with the hash
-  var jsonResponse = JSON.stringify({ hash: hashHex });
+    #container {
+      text-align: center;
+    }
 
-  // Set the Content-Type header to application/json
-  var headers = new Headers();
-  headers.append('Content-Type', 'application/json');
+    #hashValue {
+      font-size: 24px;
+      padding: 30px 60px;
+      font-weight: 700;
+      width: 700px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
 
-  // Create a new Response with the JSON content and headers
-  var response = new Response(jsonResponse, {
-    headers: headers
-  });
+    #copyMessage {
+      display: none;
+      color: green;
+      font-size: 18px;
+    }
+  </style>
+</head>
 
-  // Return the response
-  return response;
-}).catch(function(err) {
-  // Handle any errors
-  console.error('Error: ' + err);
-});
+<body>
+  <div id="container">
+    <p id="copyMessage">Copied!</p>
+    <input type="text" id="hashValue" readonly>
+  </div>
+  <script>
+    // Your previous code to calculate the hash
+    var url = window.location.href;
+    var parts = url.split('/');
+    var lastPart = parts[parts.length - 1];
 
+    var encoder = new TextEncoder();
+    var data = encoder.encode(lastPart);
 
+    crypto.subtle.digest('SHA-256', data).then(function (hash) {
+      var hashArray = Array.from(new Uint8Array(hash));
+      var hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      document.getElementById('hashValue').value = hashHex;
+    }).catch(function (err) {
+      console.error('Error: ' + err);
+    });
 
-</script>
+    // Function to copy the hash value to clipboard
+    document.getElementById('hashValue').addEventListener('click', function () {
+      this.select();
+      document.execCommand('copy');
+      var copyMessage = document.getElementById('copyMessage');
+      copyMessage.style.display = 'block';
+      setTimeout(function () {
+        copyMessage.style.display = 'none';
+      }, 1500);
+    });
+  </script>
+</body>
+
+</html>
