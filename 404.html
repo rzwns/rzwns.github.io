@@ -1,6 +1,39 @@
 <script>
-    var url = window.location.href;
-    var parts = url.split('/');
-    var lastPart = parts[parts.length - 1];
-    console.log(lastPart);
+var url = window.location.href;
+var parts = url.split('/');
+var lastPart = parts[parts.length - 1];
+console.log(lastPart);
+// Create a new instance of the TextEncoder interface
+var encoder = new TextEncoder();
+
+// Convert the lastPart to an array buffer
+var data = encoder.encode(lastPart);
+
+// Hash the array buffer using the SubtleCrypto API
+crypto.subtle.digest('SHA-256', data).then(function(hash) {
+  // Convert the hash to a hexadecimal string
+  var hashArray = Array.from(new Uint8Array(hash));
+  var hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+  
+  // Create a JSON response with the hash
+  var jsonResponse = JSON.stringify({ hash: hashHex });
+
+  // Set the Content-Type header to application/json
+  var headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+
+  // Create a new Response with the JSON content and headers
+  var response = new Response(jsonResponse, {
+    headers: headers
+  });
+
+  // Return the response
+  return response;
+}).catch(function(err) {
+  // Handle any errors
+  console.error('Error: ' + err);
+});
+
+
+
 </script>
