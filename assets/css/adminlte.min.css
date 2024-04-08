@@ -2321,7 +2321,7 @@ pre code {
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
+    border-radius: 2rem;
     box-shadow: inset 0 0 0 transparent;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
@@ -2874,7 +2874,7 @@ textarea.form-control.is-invalid {
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
-    border-radius: .25rem;
+    border-radius: 2rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
 
@@ -28419,18 +28419,18 @@ body.text-sm .input-group-text {
     color: #1f2d3d
 }
 
-.card-primary.card-outline {
+/* .card-primary.card-outline {
     border-top: 3px solid #007bff
-}
+} */
 
-.card-primary.card-outline-tabs>.card-header a:hover {
+/* .card-primary.card-outline-tabs>.card-header a:hover {
     border-top: 3px solid #dee2e6
-}
+} */
 
-.card-primary.card-outline-tabs>.card-header a.active,
+/* .card-primary.card-outline-tabs>.card-header a.active,
 .card-primary.card-outline-tabs>.card-header a.active:hover {
     border-top: 3px solid #007bff
-}
+} */
 
 .bg-gradient-primary>.card-header .btn-tool,
 .bg-primary>.card-header .btn-tool,
@@ -30858,8 +30858,13 @@ html.maximized-card {
 .dark-mode .card-primary:not(.card-outline)>.card-header a.active {
     color: #1f2d3d
 }
+.txtadmin {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
 
-.dark-mode .card-primary.card-outline {
+/* .dark-mode .card-primary.card-outline {
     border-top: 3px solid #3f6791
 }
 
@@ -30870,7 +30875,7 @@ html.maximized-card {
 .dark-mode .card-primary.card-outline-tabs>.card-header a.active,
 .dark-mode .card-primary.card-outline-tabs>.card-header a.active:hover {
     border-top: 3px solid #3f6791
-}
+} */
 
 .dark-mode .bg-gradient-primary>.card-header .btn-tool,
 .dark-mode .bg-primary>.card-header .btn-tool,
@@ -36950,7 +36955,7 @@ a.disabled.mailbox-attachment-close {
 .register-page {
     -ms-flex-align: center;
     align-items: center;
-    background-color: #e9ecef;
+    background-color: #191919;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
